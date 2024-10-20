@@ -4,12 +4,14 @@
   "description": "",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.94.0"
+    "vscode": "^1.68.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "*"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -17,7 +19,25 @@
         "command": "codeai.helloWorld",
         "title": "Hello World"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "mySidebar",
+          "title": "My Sidebar",
+          "icon": "bot.png"
+        }
+      ]
+    },
+    "views": {
+      "mySidebar": [
+        {
+          "type": "webview",
+          "id": "mySidebarView",
+          "name": "My View"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

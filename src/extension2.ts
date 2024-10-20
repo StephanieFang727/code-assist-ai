@@ -27,38 +27,47 @@ class MySidebarProvider implements vscode.WebviewViewProvider {
     // 设置 Webview 的选项
     webviewView.webview.options = {
       enableScripts: true,
-      localResourceRoots: [this._extensionUri],
+      //   localResourceRoots: [this._extensionUri],
     };
     console.log("ff");
     // 设置 Webview 的 HTML 内容
     //  console.log(this.getHtmlForWebview(webviewView.webview));
-    webviewView.webview.html = this.getHtmlForWebview(webviewView.webview);
+    webviewView.webview.html = this.getHtmlForWebview(
+      webviewView.webview,
+      this._extensionUri
+    );
   }
 
-  private getHtmlForWebview(webview: vscode.Webview): string {
+  private getHtmlForWebview(
+    webview: vscode.Webview,
+    extensionUri: vscode.Uri
+  ): string {
     // 获取 Webview 中使用的 CSS 和 JS 文件的 URI
-    const styleUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "media", "style.css")
-    );
-    const scriptUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "media", "main.js")
-    );
+    // const styleUri = webview.asWebviewUri(
+    //   vscode.Uri.joinPath(extensionUri, "media", "style.css")
+    // );
+    // const scriptUri = webview.asWebviewUri(
+    //   vscode.Uri.joinPath(extensionUri, "media", "main.js")
+    // );
 
     // 返回 Webview 的 HTML 页面
-    return `<!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <link href="${styleUri}" rel="stylesheet">
-                <title>My Sidebar</title>
-            </head>
-            <body>
-                <h1>Hello from My Sidebar!</h1>
-                <button id="myButton">Click me</button>
-                <script src="${scriptUri}"></script>
-            </body>
-            </html>`;
+    return /*html*/ `
+          <!DOCTYPE html>
+          <html lang="en">
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                  <title>Input Code</title>
+              </head>
+              <body>
+                  <table>
+                      <tr>
+                          <th class="title">Input Code</th>
+                      </tr>
+                  </table>             
+              </body>
+          </html>
+          `;
   }
 }
 
