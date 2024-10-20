@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import * as babylon from "@babel/parser";
 
 const refactorCommand = {
   name: "extension.refactorFunction",
@@ -11,17 +12,32 @@ const refactorCommand = {
       const selectedText = editor.document.getText(selection);
 
       if (selectedText) {
-        //  vscode.window.showInformationMessage("正在请求 AI 进行重构...");
+        // 判断是否为一个完整的js函数
+        // ========================
+        const code1 = "function add(a, b) { return a + b; }";
+        const code2 =
+          'console.log("Hello"); function add(a, b) { return a + b; }';
+        // console.log(isCompleteFunction(code1)); // true
+        //  console.log(isCompleteFunction(code2)); // false
+        // ================================
+
+        // vscode.commands.executeCommand(
+        //   "extension.showInWebview",
+        //   "正在请求 AI 进行重构..."
+        // );
+
+        console.log("selectedText:", selectedText);
         vscode.commands.executeCommand(
           "extension.showInWebview",
-          "正在请求 AI 进行重构..."
+          isCompleteFunction(selectedText)
         );
-        setTimeout(() => {
-          vscode.commands.executeCommand(
-            "extension.showInWebview",
-            selectedText
-          );
-        }, 2000);
+
+        // setTimeout(() => {
+        //   vscode.commands.executeCommand(
+        //     "extension.showInWebview",
+        //     isCompleteFunction(selectedText)
+        //   );
+        // }, 2000);
         // 打开侧边栏并显示选中的文本
         //  vscode.commands.executeCommand("workbench.view.extension.sidebarView");
 
@@ -49,5 +65,29 @@ async function callAIForRefactor(code: string): Promise<string> {
   // 这里用假数据模拟返回
   return `AI 重构后的代码:\n${code.replace("function", "async function")}`;
 }
+
+const isCompleteFunction = (code: string): boolean => {
+  const ast = babylon.parse(code);
+  let isFunction = false;
+
+  if (
+    ast.program.body.length === 1 &&
+    ast.program.body[0].type === "ExpressionStatement" &&
+    ast.program.body[0].expression.type === "ArrowFunctionExpression"
+  ) {
+    return true;
+  }
+  ast.program.body.forEach((node) => {
+    if (
+      node.type === "FunctionDeclaration" ||
+      (node.type === "VariableDeclaration" &&
+        node.declarations[0].init &&
+        node.declarations[0].init.type === "ArrowFunctionExpression")
+    ) {
+      isFunction = true;
+    }
+  });
+  return isFunction;
+};
 
 export default refactorCommand;
