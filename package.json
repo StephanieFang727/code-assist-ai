@@ -14,26 +14,35 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "menus": {
+      "editor/context": [
+        {
+          "command": "extension.refactorFunction",
+          "when": "editorHasSelection",
+          "group": "navigation"
+        }
+      ]
+    },
     "commands": [
       {
-        "command": "codeai.helloWorld",
-        "title": "Hello World"
+        "command": "extension.refactorFunction",
+        "title": "重构函数"
       }
     ],
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "mySidebar",
+          "id": "sidebar",
           "title": "My Sidebar",
           "icon": "bot.png"
         }
       ]
     },
     "views": {
-      "mySidebar": [
+      "sidebar": [
         {
           "type": "webview",
-          "id": "mySidebarView",
+          "id": "sidebarView",
           "name": "My View"
         }
       ]

@@ -2,18 +2,15 @@ import * as vscode from "vscode";
 
 export function activate(context: vscode.ExtensionContext) {
   // 注册侧边栏视图提供程序
-  const mySidebarProvider = new MySidebarProvider(context.extensionUri);
+  const sidebarProvider = new SidebarProvider(context.extensionUri);
   context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider(
-      "mySidebarView",
-      mySidebarProvider
-    )
+    vscode.window.registerWebviewViewProvider("sidebarView", sidebarProvider)
   );
 
-  console.log('Congratulations, your extension "mySidebar" is now active!');
+  console.log('Congratulations, your extension "sidebar" is now active!');
 }
 
-class MySidebarProvider implements vscode.WebviewViewProvider {
+class SidebarProvider implements vscode.WebviewViewProvider {
   private _view?: vscode.WebviewView;
 
   constructor(private readonly _extensionUri: vscode.Uri) {}
