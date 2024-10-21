@@ -1,6 +1,9 @@
 import * as vscode from "vscode";
 import SidebarProvider from "./providers/SidebarProvider";
+import FunctionCodeLensProvider from "./providers/FunctionCodeLensProvider";
 import refactorCommand from "./commands/refactorCommand";
+import { error } from "console";
+
 export function activate(context: vscode.ExtensionContext) {
   // 注册侧边栏视图提供程序
   const sidebarProvider = new SidebarProvider(context.extensionUri);
@@ -34,6 +37,24 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openSidebarCommand);
+
+  // 函数提示
+  const functionCodeLensProvider = new FunctionCodeLensProvider();
+  context.subscriptions.push(
+    vscode.languages.registerCodeLensProvider(
+      { language: "javascript" },
+      functionCodeLensProvider
+    )
+  );
+
+  // 提示错误信息
+  const showErrorInfo = vscode.commands.registerCommand(
+    "extension.showErrorInfo",
+    (errorMsg: string) => {
+      vscode.window.showErrorMessage(`Easy Code Error: ${errorMsg}`);
+    }
+  );
+  context.subscriptions.push(showErrorInfo);
 
   console.log('Congratulations, your extension "sidebar" is now active!');
 }
