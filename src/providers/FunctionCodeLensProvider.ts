@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { Range, Position } from "vscode";
 import * as ts from "typescript";
-import parseFunctions from "../utils/parseFile";
+import parseFunctions from "../utils/parseFunctions";
 
 // 定义 Babel 解析出的位置信息类型
 interface Location {
@@ -26,23 +26,33 @@ class FunctionCodeLensProvider implements vscode.CodeLensProvider {
 
     const text: string = document.getText();
     console.log("text", text);
+    // 获取文件类型
+    const languageId = document.languageId;
 
     const functions = parseFunctions(text);
-    console.log("func", functions);
+
     functions.forEach((item) => {
       const range = convertToVSCodeRange(item.start, item.end);
-      codeLenses.push(
-        new vscode.CodeLens(range, {
-          title: "转为TS",
-          command: "extension.refactorFunction",
-          arguments: ["test"],
-        }),
-        new vscode.CodeLens(range, {
-          title: "重构函数",
-          command: "extension.refactorFunction",
-          arguments: ["test"],
-        })
-      );
+
+      if (["javascript", "javascriptreact"].includes(languageId)) {
+        codeLenses.push(
+          new vscode.CodeLens(range, {
+            title: "转为TS",
+            command: "extension.translateToTsFunction",
+            arguments: [item.content],
+          })
+        );
+      }
+
+      if (item.length > 10) {
+        codeLenses.push(
+          new vscode.CodeLens(range, {
+            title: "重构函数",
+            command: "extension.refactorFunction",
+            arguments: [item.content],
+          })
+        );
+      }
     });
     console.log("code", codeLenses);
 

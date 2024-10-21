@@ -1,7 +1,8 @@
 import * as vscode from "vscode";
 import SidebarProvider from "./providers/SidebarProvider";
 import FunctionCodeLensProvider from "./providers/FunctionCodeLensProvider";
-import refactorCommand from "./commands/refactorCommand";
+import refactorFunction from "./commands/refactorFunction";
+import translateToTsFunction from "./commands/translateToTsFunction";
 import { error } from "console";
 
 export function activate(context: vscode.ExtensionContext) {
@@ -13,10 +14,17 @@ export function activate(context: vscode.ExtensionContext) {
 
   // 注册重构函数命令
   const refactorFunctionDisposable = vscode.commands.registerCommand(
-    refactorCommand.name,
-    refactorCommand.execute
+    refactorFunction.name,
+    refactorFunction.execute
   );
   context.subscriptions.push(refactorFunctionDisposable);
+
+  // 注册js转ts函数命令
+  const translateToTsFunctionDisposable = vscode.commands.registerCommand(
+    translateToTsFunction.name,
+    translateToTsFunction.execute
+  );
+  context.subscriptions.push(translateToTsFunctionDisposable);
 
   // 注册显示 WebView 的命令
   const showView = vscode.commands.registerCommand(
@@ -42,7 +50,11 @@ export function activate(context: vscode.ExtensionContext) {
   const functionCodeLensProvider = new FunctionCodeLensProvider();
   context.subscriptions.push(
     vscode.languages.registerCodeLensProvider(
-      { language: "javascript" },
+      [
+        { language: "javascript" },
+        { language: "typescript" },
+        { language: "javascriptreact" },
+      ],
       functionCodeLensProvider
     )
   );
