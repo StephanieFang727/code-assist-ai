@@ -33,22 +33,30 @@ class FunctionCodeLensProvider implements vscode.CodeLensProvider {
 
     functions.forEach((item) => {
       const range = convertToVSCodeRange(item.start, item.end);
+      if (item.complexity) {
+        if (item.complexity > 5) {
+          codeLenses.push(
+            new vscode.CodeLens(range, {
+              title: "复杂度为:" + item.complexity + "! 重构函数",
+              command: "extension.refactorFunction",
+              arguments: [item.content],
+            })
+          );
+        } else {
+          codeLenses.push(
+            new vscode.CodeLens(range, {
+              title: "复杂度为:" + item.complexity,
+              command: "extension.empty",
+            })
+          );
+        }
+      }
 
       if (["javascript", "javascriptreact"].includes(languageId)) {
         codeLenses.push(
           new vscode.CodeLens(range, {
             title: "转为TS",
             command: "extension.translateToTsFunction",
-            arguments: [item.content],
-          })
-        );
-      }
-
-      if (item.length > 10) {
-        codeLenses.push(
-          new vscode.CodeLens(range, {
-            title: "重构函数",
-            command: "extension.refactorFunction",
             arguments: [item.content],
           })
         );

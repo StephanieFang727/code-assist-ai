@@ -21,7 +21,7 @@ const calculateFunctionComplexity = (code: string): number => {
         complexity += 1;
         break;
       case "WhileStatement":
-        complexity += 11;
+        complexity += 1;
         break;
       case "FunctionDeclaration":
         // 处理嵌套函数
@@ -32,7 +32,7 @@ const calculateFunctionComplexity = (code: string): number => {
         complexity += nestedComplexity + 1;
         break;
       default:
-        complexity += 0;
+        complexity += 2;
     }
   }
 

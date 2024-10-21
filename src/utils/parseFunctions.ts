@@ -4,6 +4,7 @@ import * as path from "path";
 import { parse } from "@babel/parser";
 import traverse, { NodePath, Node } from "@babel/traverse";
 import * as t from "@babel/types";
+import complexityMap from "./metrics";
 
 // 定义函数信息的接口
 interface FunctionInfo {
@@ -12,6 +13,7 @@ interface FunctionInfo {
   end: { line: number; column: number };
   length: number;
   content: string; // 函数的内容
+  complexity?: number;
 }
 
 // 获取特定位置的代码片段
@@ -38,6 +40,36 @@ function getCodeFromPosition(
   return resultLines.join("\n"); // 将多行代码重新组合为字符串
 }
 
+// 定义函数复杂度的接口
+interface FunctionComplexity {
+  name: string;
+  complexity: number;
+}
+
+// 存储函数复杂度信息的数组
+const functionComplexities: FunctionComplexity[] = [];
+
+// 计算函数的复杂度
+function calculateComplexity(
+  path: NodePath<
+    t.FunctionDeclaration | t.FunctionExpression | t.ArrowFunctionExpression
+  >
+) {
+  let complexity = 1; // 初始复杂度（每个函数至少1）
+
+  path.traverse({
+    enter(subPath) {
+      const nodeType = subPath.node.type as keyof typeof complexityMap;
+      if (complexityMap[nodeType]) {
+        console.log("sub", nodeType);
+        complexity += complexityMap[nodeType];
+      }
+    },
+  });
+
+  return complexity;
+}
+
 const parseFunctions = (code: string): FunctionInfo[] => {
   // 存储函数及其位置信息的数组
   const functions: FunctionInfo[] = [];
@@ -48,18 +80,13 @@ const parseFunctions = (code: string): FunctionInfo[] => {
       sourceType: "module",
       plugins: ["typescript", "jsx"], // 视项目需求添加插件
     });
-    console.log("ast", ast);
+    // console.log("ast", ast);
     // 遍历 AST
     traverse(ast, {
       // 处理函数声明
       FunctionDeclaration(path: NodePath<t.FunctionDeclaration>) {
         if (processedNodes.has(path.node)) return; // 如果节点已处理，跳过
-        let complexity = 0;
-        path.node.body.body.forEach((node) => {
-          processNode(node, complexity);
-        });
-        console.log("complexity", complexity);
-
+        // 获取函数位置信息和复杂度
         const { loc } = path.node;
         if (loc && path.node.id) {
           const functionContent = getCodeFromPosition(code, loc.start, loc.end);
@@ -69,6 +96,7 @@ const parseFunctions = (code: string): FunctionInfo[] => {
             end: loc.end,
             length: loc.end.line - loc.start.line + 1,
             content: functionContent,
+            complexity: calculateComplexity(path),
           });
           processedNodes.add(path.node); // 标记节点为已处理
         }
@@ -94,6 +122,11 @@ const parseFunctions = (code: string): FunctionInfo[] => {
               end: parentLoc.end,
               length: parentLoc.end.line - parentLoc.start.line + 1,
               content: functionContent,
+              complexity: calculateComplexity(
+                path.get("init") as NodePath<
+                  t.FunctionExpression | t.ArrowFunctionExpression
+                >
+              ),
             });
             processedNodes.add(path.node.init!); // 标记节点为已处理
           }
@@ -121,6 +154,7 @@ const parseFunctions = (code: string): FunctionInfo[] => {
             end: loc.end,
             length: loc.end.line - loc.start.line + 1,
             content: functionContent,
+            complexity: calculateComplexity(path),
           });
           processedNodes.add(path.node); // 标记节点为已处理
         }
@@ -165,29 +199,5 @@ const parseFunctions = (code: string): FunctionInfo[] => {
   console.log(functions);
   return functions;
 };
-
-function processNode(node: Node, complexity: number) {
-  switch (node.type) {
-    case "IfStatement":
-      complexity += 1;
-      break;
-    case "ForStatement":
-      complexity += 1;
-      break;
-    case "WhileStatement":
-      complexity += 11;
-      break;
-    case "FunctionDeclaration":
-      // 处理嵌套函数
-      let nestedComplexity = 0;
-      node.body.body.forEach((nestedNode) => {
-        processNode(nestedNode, complexity);
-      });
-      complexity += nestedComplexity + 1;
-      break;
-    default:
-      complexity += 0;
-  }
-}
 
 export default parseFunctions;
