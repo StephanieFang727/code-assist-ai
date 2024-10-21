@@ -196,7 +196,6 @@ const parseFunctions = (code: string): FunctionInfo[] => {
   }
 
   // 输出结果
-  console.log(functions);
   return functions;
 };
 

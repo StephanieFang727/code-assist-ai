@@ -23,9 +23,7 @@ class FunctionCodeLensProvider implements vscode.CodeLensProvider {
     token: vscode.CancellationToken
   ): vscode.CodeLens[] {
     const codeLenses: vscode.CodeLens[] = [];
-
     const text: string = document.getText();
-    console.log("text", text);
     // 获取文件类型
     const languageId = document.languageId;
 

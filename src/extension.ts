@@ -67,6 +67,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(showErrorInfo);
+
   // 空白命令
   const emptyCommand = vscode.commands.registerCommand(
     "extension.empty",

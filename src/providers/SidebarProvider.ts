@@ -19,9 +19,7 @@ class SidebarProvider implements vscode.WebviewViewProvider {
       enableScripts: true,
       //   localResourceRoots: [this._extensionUri],
     };
-    console.log("ff");
     // 设置 Webview 的 HTML 内容
-    //  console.log(this.getHtmlForWebview(webviewView.webview));
     webviewView.webview.html = this.getHtmlForWebview(webviewView.webview);
   }
 
