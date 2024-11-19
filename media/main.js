@@ -18,6 +18,7 @@
 // });
 const vscode = acquireVsCodeApi();
 console.log("vs");
+
 // 重置样式
 const reset = () => {
   // document.getElementsByTagName("h5").forEach((element) => {
@@ -32,6 +33,16 @@ const reset = () => {
 window.addEventListener("message", (event) => {
   console.log("get msg");
   const message = event.data;
+  const md = window.markdownit({
+    highlight: function (str, lang) {
+      if (lang && window.hljs.getLanguage(lang)) {
+        try {
+          return window.hljs.highlight(str, { language: lang }).value;
+        } catch (__) {}
+      }
+      return ""; // use external default escaping
+    },
+  });
   if (message.command === "update") {
     document.getElementById("content").textContent = message.text;
   }
@@ -54,7 +65,13 @@ window.addEventListener("message", (event) => {
   }
 
   if (message.command === "updateAfter") {
-    document.getElementById("content_after").textContent = message.text;
+    //  document.getElementById("content_after").textContent = message.text;
+
+    // Render Markdown content
+    document.getElementById("content_after").innerHTML = md.render(
+      message.text
+    );
+
     document.getElementById("loading").classList.add("hide");
     document.getElementById("after").classList.add("show");
     hljs.highlightAll();

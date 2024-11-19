@@ -78,10 +78,9 @@ class SidebarProvider implements vscode.WebviewViewProvider {
                   <meta name="viewport" content="width=device-width, initial-scale=1.0">
                   <link href="${styleUri}" rel="stylesheet">
                   <title>My Sidebar</title>
-                  <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script></script>
-                  </head>
+                  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+                  <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/13.0.1/markdown-it.min.js"></script>
+                  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script></script>
                   <script type="module" src="${scriptUri}"></script>
               </head>
               <body>

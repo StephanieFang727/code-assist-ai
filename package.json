@@ -71,6 +71,7 @@
   "dependencies": {
     "@babel/core": "^7.25.8",
     "@babel/parser": "^7.25.8",
+    "axios": "^1.7.7",
     "openai": "^4.68.1"
   }
 }

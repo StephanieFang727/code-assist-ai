@@ -11,13 +11,16 @@ const translateToTsFunction = {
     if (text) {
       vscode.commands.executeCommand("extension.transformToTs.start", text);
 
-      //  const responseText = await aiRequest(text);
+      const responseText = await aiRequest(text, "transform");
       console.log("text:", text);
       // vscode.commands.executeCommand("extension.showInWebview", responseText);
 
-      setTimeout(() => {
-        vscode.commands.executeCommand("extension.transformToTs.end", text);
-      }, 3000);
+      // setTimeout(() => {
+      vscode.commands.executeCommand(
+        "extension.transformToTs.end",
+        responseText
+      );
+      // }, 3000);
     } else {
       // vscode.window.showWarningMessage("请先选中一个函数！");
     }
