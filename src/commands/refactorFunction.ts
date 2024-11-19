@@ -9,17 +9,14 @@ const refactorFunction = {
     vscode.commands.executeCommand("extension.openSidebar");
 
     if (text) {
-      vscode.commands.executeCommand(
-        "extension.showInWebview",
-        "代码重构中..."
-      );
+      vscode.commands.executeCommand("extension.refactorFunction.start", text);
 
       //  const responseText = await aiRequest(text);
       console.log("text:", text);
       // vscode.commands.executeCommand("extension.showInWebview", responseText);
 
       setTimeout(() => {
-        vscode.commands.executeCommand("extension.showInWebview", text);
+        vscode.commands.executeCommand("extension.refactorFunction.end", text);
       }, 3000);
     } else {
       // vscode.window.showWarningMessage("请先选中一个函数！");

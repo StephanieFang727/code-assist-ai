@@ -32,6 +32,35 @@ class SidebarProvider implements vscode.WebviewViewProvider {
     }
   }
 
+  public updateRefactorBefore(content: string) {
+    if (this._view) {
+      console.log("do update");
+      this._view.webview.postMessage({
+        command: "updateRefactorBefore",
+        text: content,
+      });
+    }
+  }
+
+  public updateTransformToTsBefore(content: string) {
+    if (this._view) {
+      console.log("do update");
+      this._view.webview.postMessage({
+        command: "updateTransformToTsBefore",
+        text: content,
+      });
+    }
+  }
+
+  public updateAfter(content: string) {
+    if (this._view) {
+      this._view.webview.postMessage({
+        command: "updateAfter",
+        text: content,
+      });
+    }
+  }
+
   private getHtmlForWebview(webview: vscode.Webview): string {
     // 获取 Webview 中使用的 CSS 和 JS 文件的 URI
     const styleUri = webview.asWebviewUri(
@@ -49,11 +78,27 @@ class SidebarProvider implements vscode.WebviewViewProvider {
                   <meta name="viewport" content="width=device-width, initial-scale=1.0">
                   <link href="${styleUri}" rel="stylesheet">
                   <title>My Sidebar</title>
+                  <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script></script>
+                  </head>
                   <script type="module" src="${scriptUri}"></script>
               </head>
               <body>
-                  <h1>Hello from My Sidebar!</h1>
-                  <pre id="content"></pre>
+                  <h1>Easy code with AI</h1>
+                  <h5 id="complex">· 函数复杂度检测</h5>
+                  <h5 id="refactor">· 复杂函数重构</h5>
+                  <h5 id="transform">· js函数转ts</h5>
+                  
+                  <div class="container hide">
+                    <h5>原函数：</h5>
+                    <pre><code id="content_before" class="javascript"></code></pre>
+                    <h5 id="loading">转换中...</h5>
+                    <div id="after" class="hide">
+                      <h5>转换后：</h2>
+                      <pre><code id="content_after" class="javascript"></code></pre>
+                    </div>
+                  </div>
                 </script>
               </body>
               </html>`;

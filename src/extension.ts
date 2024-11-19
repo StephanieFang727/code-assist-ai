@@ -37,6 +37,46 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(showView);
 
+  const refactorFunctionStart = vscode.commands.registerCommand(
+    "extension.refactorFunction.start",
+    (content: string) => {
+      console.log("content", SidebarProvider.currentPanel);
+      // 打开 WebView 并显示内容
+      SidebarProvider.currentPanel?.updateRefactorBefore(content);
+    }
+  );
+  context.subscriptions.push(refactorFunctionStart);
+
+  const refactorFunctionEnd = vscode.commands.registerCommand(
+    "extension.refactorFunction.end",
+    (content: string) => {
+      console.log("content", SidebarProvider.currentPanel);
+      // 打开 WebView 并显示内容
+      SidebarProvider.currentPanel?.updateAfter(content);
+    }
+  );
+  context.subscriptions.push(refactorFunctionEnd);
+
+  const transformToTsStart = vscode.commands.registerCommand(
+    "extension.transformToTs.start",
+    (content: string) => {
+      console.log("content", SidebarProvider.currentPanel);
+      // 打开 WebView 并显示内容
+      SidebarProvider.currentPanel?.updateTransformToTsBefore(content);
+    }
+  );
+  context.subscriptions.push(transformToTsStart);
+
+  const transformToTsEnd = vscode.commands.registerCommand(
+    "extension.transformToTs.end",
+    (content: string) => {
+      console.log("content", SidebarProvider.currentPanel);
+      // 打开 WebView 并显示内容
+      SidebarProvider.currentPanel?.updateAfter(content);
+    }
+  );
+  context.subscriptions.push(transformToTsEnd);
+
   // 注册打开侧边栏的命令
   const openSidebarCommand = vscode.commands.registerCommand(
     "extension.openSidebar",

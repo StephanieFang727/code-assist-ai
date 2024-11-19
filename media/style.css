@@ -6,3 +6,30 @@ body {
 h1 {
   color: #007acc;
 }
+
+.code {
+  border: 1px solid #363636;
+  background-color: #3c3c3c;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 5px;
+  overflow: hidden;
+  white-space: pre-wrap;
+  &.after {
+    background-color: #242424;
+    color: #007acc;
+  }
+}
+
+code {
+  font-size: 10px;
+  white-space: pre-wrap;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}

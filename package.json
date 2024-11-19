@@ -33,7 +33,7 @@
       "activitybar": [
         {
           "id": "sidebar",
-          "title": "My Sidebar",
+          "title": "easy code",
           "icon": "bot.png"
         }
       ]
@@ -43,7 +43,7 @@
         {
           "type": "webview",
           "id": "sidebarView",
-          "name": "My View"
+          "name": ""
         }
       ]
     }

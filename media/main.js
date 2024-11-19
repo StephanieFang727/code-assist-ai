@@ -16,13 +16,47 @@
 //       break;
 //   }
 // });
-
 const vscode = acquireVsCodeApi();
 console.log("vs");
+// 重置样式
+const reset = () => {
+  // document.getElementsByTagName("h5").forEach((element) => {
+  //   element.style = "";
+  // });
+  document.getElementById("refactor").style = "";
+  document.getElementById("transform").style = "";
+  document.getElementsByClassName("container")[0].classList.remove("show");
+  document.getElementById("after").classList.remove("show");
+  document.getElementById("loading").classList.remove("hide");
+};
 window.addEventListener("message", (event) => {
   console.log("get msg");
   const message = event.data;
   if (message.command === "update") {
     document.getElementById("content").textContent = message.text;
+  }
+  if (message.command === "updateRefactorBefore") {
+    reset();
+    document.getElementById("refactor").style =
+      "color: #007acc; font-size: 14px";
+    document.getElementById("content_before").textContent = message.text;
+    document.getElementsByClassName("container")[0].classList.add("show");
+    hljs.highlightAll();
+  }
+
+  if (message.command === "updateTransformToTsBefore") {
+    reset();
+    document.getElementById("transform").style =
+      "color: #007acc; font-size: 14px";
+    document.getElementById("content_before").textContent = message.text;
+    document.getElementsByClassName("container")[0].classList.add("show");
+    hljs.highlightAll();
+  }
+
+  if (message.command === "updateAfter") {
+    document.getElementById("content_after").textContent = message.text;
+    document.getElementById("loading").classList.add("hide");
+    document.getElementById("after").classList.add("show");
+    hljs.highlightAll();
   }
 });
