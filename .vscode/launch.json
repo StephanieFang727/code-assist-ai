@@ -9,13 +9,14 @@
 			"name": "Run Extension",
 			"type": "extensionHost",
 			"request": "launch",
+			"runtimeExecutable": "${execPath}",
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}"
 			],
 			"outFiles": [
-				"${workspaceFolder}/out/**/*.js"
-			],
-			"preLaunchTask": "${defaultBuildTask}"
+				"${workspaceFolder}/dist/**/*.js"
+			], // 配置输出目录
+			"preLaunchTask": "compile"
 		}
 	]
 }

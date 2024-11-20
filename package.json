@@ -2,6 +2,9 @@
   "name": "easy-code",
   "displayName": "EasyCode",
   "publisher": "fangjie_727@163.com",
+  "repository": {
+    "url": "https://github.com/StephanieFang727/easy-code.git"
+  },
   "description": "",
   "version": "0.0.1",
   "engines": {
@@ -13,7 +16,7 @@
   "activationEvents": [
     "*"
   ],
-  "main": "./out/extension.js",
+  "main": "./dist/extension",
   "contributes": {
     "configuration": {
       "title": "easyCode",
@@ -65,12 +68,13 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "compile": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
+    "vscode:prepublish": "npm run package",
+    "package": "webpack --mode production --devtool hidden-source-map"
   },
   "devDependencies": {
     "@types/babel__traverse": "^7.20.6",
@@ -82,13 +86,21 @@
     "@vscode/test-cli": "^0.0.9",
     "@vscode/test-electron": "^2.4.0",
     "eslint": "^8.57.0",
-    "typescript": "^5.4.5"
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "@babel/core": "^7.25.8",
     "@babel/parser": "^7.25.8",
     "axios": "^1.7.7",
+    "crypto-browserify": "^3.12.1",
     "dotenv": "^16.4.5",
-    "openai": "^4.68.1"
+    "openai": "^4.68.1",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "stream-browserify": "^3.0.0",
+    "vm-browserify": "^1.1.2"
   }
 }
