@@ -3,7 +3,6 @@ import SidebarProvider from "./providers/SidebarProvider";
 import FunctionCodeLensProvider from "./providers/FunctionCodeLensProvider";
 import refactorFunction from "./commands/refactorFunction";
 import translateToTsFunction from "./commands/translateToTsFunction";
-import { error } from "console";
 
 export function activate(context: vscode.ExtensionContext) {
   // 注册侧边栏视图提供程序

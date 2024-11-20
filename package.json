@@ -88,6 +88,7 @@
     "@babel/core": "^7.25.8",
     "@babel/parser": "^7.25.8",
     "axios": "^1.7.7",
+    "dotenv": "^16.4.5",
     "openai": "^4.68.1"
   }
 }
