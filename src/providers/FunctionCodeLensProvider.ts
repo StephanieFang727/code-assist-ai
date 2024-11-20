@@ -32,7 +32,7 @@ class FunctionCodeLensProvider implements vscode.CodeLensProvider {
     functions.forEach((item) => {
       const range = convertToVSCodeRange(item.start, item.end);
       if (item.complexity) {
-        const config = vscode.workspace.getConfiguration("easyCode");
+        const config = vscode.workspace.getConfiguration("codeAssist");
         const warnLimit = config.get("complexWarnLimit") as number;
         if (item.complexity > warnLimit) {
           codeLenses.push(

@@ -1,11 +1,12 @@
 {
-  "name": "easy-code",
-  "displayName": "EasyCode",
-  "publisher": "fangjie_727@163.com",
+  "name": "code-assist-ai",
+  "displayName": "CodeAssist - Refactor with AI",
+  "publisher": "fangjie-727",
+  "icon": "code.png",
   "repository": {
     "url": "https://github.com/StephanieFang727/easy-code.git"
   },
-  "description": "",
+  "description": "函数复杂度检测，复杂函数重构，javascript函数转typescript函数",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.68.0"
@@ -19,14 +20,14 @@
   "main": "./dist/extension",
   "contributes": {
     "configuration": {
-      "title": "easyCode",
+      "title": "CodeAssist - Refactor with AI",
       "properties": {
-        "easyCode.refactorPrinciple": {
+        "codeAssist.refactorPrinciple": {
           "type": "string",
           "default": "重构函数遵循规范如下：\n1. 函数名应该以动词开头，描述函数的主要功能。\n2. 函数名应该使用小驼峰命名法。\n3. 函数应该只做一件事情，并且做好这件事情。\n4. 函数的参数应该尽可能少，最好不超过三个。\n5. 函数的返回值应该是明确的，并且与函数的主要功能相关。\n6. 将所有数字、小数、字符串等常量值都提取为大写的常数变量。\n7. 函数的实现应该简单明了，避免过多的嵌套和复杂的逻辑。\n8. 函数的注释应该清晰明了，能够解释函数的功能、参数和返回值。\n9. 函数的实现应该符合编码规范和最佳实践。\n10. 使用ES6语法声明函数。\n11. 函数组件重构时将公共方法抽取为hooks。",
           "description": "函数命名应遵循的规范"
         },
-        "easyCode.complexWarnLimit": {
+        "codeAssist.complexWarnLimit": {
           "type": "integer",
           "default": 5,
           "description": "函数复杂度告警阈值"
@@ -52,7 +53,7 @@
       "activitybar": [
         {
           "id": "sidebar",
-          "title": "easy code",
+          "title": "CodeAssist - Refactor with AI",
           "icon": "code.png"
         }
       ]

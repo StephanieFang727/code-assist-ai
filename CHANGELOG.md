@@ -1,9 +1,9 @@
-# Change Log
+# Changelog
 
-All notable changes to the "codeai" extension will be documented in this file.
+## [0.0.1] - 2024-11-20
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+### Initial Release
 
-## [Unreleased]
-
-- Initial release
+- 发布插件，提供复杂度检测功能。
+- 支持 JavaScript 和 TypeScript 文件的复杂函数重构。
+- 支持 JavaScript 函数 转换为 TypeScript 函数。

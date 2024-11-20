@@ -84,7 +84,7 @@ class SidebarProvider implements vscode.WebviewViewProvider {
                   <script type="module" src="${scriptUri}"></script>
               </head>
               <body>
-                  <h1>Easy code with AI</h1>
+                  <h1>CodeAssist - Refactor with AI</h1>
                   <h5 id="complex">· 函数复杂度检测</h5>
                   <h5 id="refactor">· 复杂函数重构</h5>
                   <h5 id="transform">· js函数转ts</h5>

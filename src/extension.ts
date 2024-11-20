@@ -103,7 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
   const showErrorInfo = vscode.commands.registerCommand(
     "extension.showErrorInfo",
     (errorMsg: string) => {
-      vscode.window.showErrorMessage(`Easy Code Error: ${errorMsg}`);
+      vscode.window.showErrorMessage(`CodeAssist Error: ${errorMsg}`);
     }
   );
   context.subscriptions.push(showErrorInfo);
