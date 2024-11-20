@@ -37,8 +37,8 @@ const Complexity = {
   // StringCallExpression: 0,
   // Comment: 0,
   IfStatement: 1,
-  ConditionalExpression: 1,
-  LogicalExpression: 1, // &&, ||
+  // ConditionalExpression: 1,
+  // LogicalExpression: 1, // &&, ||
   ForStatement: 1,
   ForInStatement: 1,
   ForOfStatement: 1,

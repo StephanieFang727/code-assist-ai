@@ -32,7 +32,9 @@ class FunctionCodeLensProvider implements vscode.CodeLensProvider {
     functions.forEach((item) => {
       const range = convertToVSCodeRange(item.start, item.end);
       if (item.complexity) {
-        if (item.complexity > 5) {
+        const config = vscode.workspace.getConfiguration("easyCode");
+        const warnLimit = config.get("complexWarnLimit") as number;
+        if (item.complexity > warnLimit) {
           codeLenses.push(
             new vscode.CodeLens(range, {
               title: "复杂度为:" + item.complexity + "! 重构函数",

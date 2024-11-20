@@ -94,6 +94,7 @@ export function activate(context: vscode.ExtensionContext) {
         { language: "javascript" },
         { language: "typescript" },
         { language: "javascriptreact" },
+        { language: "typescriptreact" },
       ],
       functionCodeLensProvider
     )
