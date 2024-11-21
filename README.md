@@ -24,7 +24,7 @@
 ### 📦 安装方法
 
 1. 打开 VS Code，进入扩展市场（快捷键：`Ctrl+Shift+X`）。
-2. 搜索 **"CodeAssist - Refactor with AI"**。
+2. 搜索 **"CodeAssist"**。
 3. 点击 **安装** 按钮。
 4. 安装完成后，重启 VS Code 即可开始使用。 🎉
 
