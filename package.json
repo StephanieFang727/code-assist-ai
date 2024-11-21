@@ -7,7 +7,7 @@
     "url": "https://github.com/StephanieFang727/code-assist-ai.git"
   },
   "description": "函数复杂度检测，复杂函数重构，javascript函数转typescript函数",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.68.0"
   },
